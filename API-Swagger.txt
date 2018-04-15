@@ -1,0 +1,115 @@
+swagger: "2.0"
+info:
+  description: "API de exemplo utilizada na Pós Desenvolvimento Web para Envio de Email"
+  version: "1.0.0"
+  title: "Desenvolvimento Web - API"
+  
+host: "com.diegoprado.andersonbonzi"
+basePath: "/v1"
+schemes:
+- "http"
+paths:
+  /email/enviar:
+     post:
+      summary: "Enviar Email"
+      description: "| Esse endpoint realiza o envio dos emails"
+      
+      parameters:
+      - in: "query"
+        name: "remetente"
+        description: "Remetente"
+        required: true
+        type: "string"
+      
+      - in: "query"
+        name: "destinatario"
+        description: "Destinatário"
+        required: true
+        type: "string"
+      
+      - in: "query"
+        name: "mensagem"
+        description: "Mensagem"
+        required: true
+        type: "string"
+      
+      - in: "query"
+        name: "dataHoraEnvio"
+        description: "Data e Hora do Envio"
+        required: true
+        type: "string"
+        format: "date"
+        
+      tags:
+      - "Email"
+      
+      responses:
+        200:
+          description: "Um array de dados para representar os envios"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/email'
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: '#/definitions/Error'
+    
+  /email/receber:
+     get:
+      summary: "Receber Email"
+      description: "| Esse endpoint realiza o recebimento de email"
+      parameters:
+      - in: "query"
+        name: "destinatario"
+        description: "Destinátario"
+        required: true
+        type: "string"
+        
+      tags:
+      - "Email"
+      
+      responses:
+        200:
+          description: "Um array de dados para representar os recebimentos"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/email'
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: '#/definitions/Error'
+    
+definitions:
+  email: 
+    type: "object"
+    properties:
+      remetente:
+        type: "string"
+        description: "Remetente"
+      destinatario:
+        type: "string"
+        description: "Destinatário"
+      mensagem:
+        type: "string"
+        description: "Mensagem"
+      dataHoraEnvio:
+        type: "string"
+        format: "date"
+        description: "Data e Hora do Envio"
+  Error:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
+      fields:
+        type: "string"
+      
+      
+      
+      
+  
